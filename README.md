@@ -18,6 +18,7 @@ It is a one-page site (**SPA** — *Single Page Application*) that dynamically s
 
 ## How to get started:
 Open the `itSolutions.html` file in any modern web browser, such as Google Chrome, Firefox, or Edge.
+Or use link - **[https://snejokk.github.io/ItSolutions/](https://snejokk.github.io/ItSolutions/)**
 
 ---
 
