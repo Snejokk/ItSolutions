@@ -1,0 +1,1271 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT Solutions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Oxanium:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Основные стили */
+        :root {
+            --primary-color: #1e3a5f; /* Темно-синий */
+            --secondary-color: #5c2e2e; /* Коричнево-красный */
+            --accent-color: #a67c52; /* Металлический/ржавый */
+            --text-color: #e0e0e0; /* Светло-серый */
+            --bg-dark: #0a0a0a; /* Очень темный фон */
+            --bg-light: #1a1a1a; /* Темный фон */
+            --border-color: #374151; /* Границы */
+        }
+
+        body {
+            font-family: 'Oxanium', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-color);
+            line-height: 1.6;
+            background-color: var(--bg-dark);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(92, 46, 46, 0.05) 0%, rgba(92, 46, 46, 0) 20%),
+                radial-gradient(circle at 90% 80%, rgba(30, 58, 95, 0.05) 0%, rgba(30, 58, 95, 0) 20%);
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Orbitron', 'Arial Black', sans-serif;
+            letter-spacing: 1px;
+            text-shadow: 0 0 5px rgba(166, 124, 82, 0.3);
+        }
+
+        /* Улучшенный фон для главной страницы */
+        .hedgehog-bg {
+            background-image: linear-gradient(rgba(10, 10, 10, 0.8), rgba(10, 10, 10, 0.8)),
+                            url('https://images.unsplash.com/photo-1547592180-85f173990a13?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        .hedgehog-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle, transparent 50%, rgba(0,0,0,0.7) 100%);
+        }
+
+        /* Анимации для страниц */
+        .page-transition {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .active-page {
+            opacity: 1;
+            display: block;
+            transform: translateY(0) scale(1);
+        }
+
+        .inactive-page {
+            opacity: 0;
+            display: none;
+            transform: translateY(20px) scale(0.95);
+        }
+
+        /* Улучшенные карточки */
+        .hedgehog-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            background: linear-gradient(145deg, #1a1a1a, #151515);
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5),
+                        0 2px 4px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-color);
+            position: relative;
+        }
+
+        .hedgehog-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(90deg, transparent 50%, rgba(166, 124, 82, 0.05) 50%),
+                linear-gradient(transparent 50%, rgba(166, 124, 82, 0.05) 50%);
+            background-size: 5px 5px;
+            pointer-events: none;
+        }
+
+        .hedgehog-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.7),
+                        0 6px 6px rgba(0, 0, 0, 0.5);
+            border-color: var(--accent-color);
+        }
+
+        .hedgehog-card:hover img {
+            transform: scale(1.1);
+        }
+
+        /* Стилизованные кнопки */
+        button, .button {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            padding: 0.75rem 1.5rem;
+            border-radius: 2px;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            background: linear-gradient(to right, var(--secondary-color), var(--accent-color));
+            color: var(--text-color);
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            font-family: 'Orbitron', sans-serif;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        button:hover, .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+            background: linear-gradient(to right, #4a2323, #8c6a48);
+        }
+
+        button:active, .button:active {
+            transform: translateY(0);
+        }
+
+        /* Улучшенная навигация */
+        nav {
+            backdrop-filter: blur(10px);
+            background: rgba(10, 10, 10, 0.9);
+            border-bottom: 1px solid var(--accent-color);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        nav a {
+            position: relative;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            color: var(--text-color);
+            text-decoration: none;
+            font-family: 'Orbitron', sans-serif;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--accent-color);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Стилизованные формы */
+        input, textarea {
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 0.75rem 1rem;
+            background: var(--bg-light);
+            color: var(--text-color);
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5), 0 0 0 3px rgba(166, 124, 82, 0.2);
+        }
+
+        /* Красивые секции */
+        section {
+            position: relative;
+            overflow: hidden;
+            padding: 4rem 0;
+            background-color: var(--bg-dark);
+        }
+
+        section .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100px;
+            background: linear-gradient(to bottom,
+                        rgba(26, 26, 26, 0.9), 
+                        transparent);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Анимированные заголовки */
+        h1, h2, h3 {
+            position: relative;
+            display: inline-block;
+        }
+
+        h1::after, h2::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to right,
+                        var(--accent-color),
+                        var(--secondary-color));
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+
+        h1:hover::after, h2:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        /* Красивые эффекты для изображений */
+        img {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            filter: brightness(0.9) contrast(1.1);
+        }
+
+        img:hover {
+            filter: brightness(1) contrast(1.2);
+        }
+
+        /* Стилизованные уведомления */
+        .notification {
+            background: linear-gradient(135deg,
+                        var(--secondary-color),
+                        var(--accent-color));
+            color: var(--text-color);
+            padding: 1rem 2rem;
+            border-radius: 4px;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--border-color);
+        }
+
+        /* Анимации для меню */
+        .menu-item {
+            animation: fadeInUp 0.6s ease backwards;
+            transition: all 0.3s ease;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.6);
+            border-color: var(--accent-color);
+        }
+
+        /* New class for general entry animation */
+        .animate-entry {
+            animation: fadeInUp 0.8s ease backwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Стилизованная галерея */
+        .gallery-modal {
+            backdrop-filter: blur(10px);
+        }
+
+        .modal-content {
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8);
+            border: 1px solid var(--accent-color);
+        }
+
+        .modal-controls button {
+            background: rgba(30, 30, 30, 0.9);
+            backdrop-filter: blur(5px);
+            padding: 0.75rem 1.5rem;
+            border-radius: 2px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+
+        .modal-controls button:hover {
+            background: rgba(50, 50, 50, 0.9);
+            transform: scale(1.1);
+        }
+
+        /* Адаптивные улучшения */
+        @media (max-width: 768px) {
+            .hedgehog-card {
+                margin: 1rem 0;
+            }
+
+            nav {
+                padding: 0.5rem;
+            }
+
+            section {
+                padding: 2rem 0;
+            }
+        }
+
+        /* Svg icons */
+        .icon-accent {
+            fill: var(--accent-color);
+        }
+
+        .icon-text {
+            fill: var(--text-color);
+        }
+
+        /* Additional styles for transitions and effects */
+        @keyframes slideOut {
+            from {
+                transform: translateX(0);
+            }
+            to {
+                transform: translateX(100%);
+            }
+        }
+
+        .notification.error {
+            background: #5c1d1d;
+        }
+
+        #splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
+            z-index: 9999;
+            opacity: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .tech-border {
+            position: relative;
+            border: 1px solid var(--border-color);
+            padding: 2rem;
+            background: var(--bg-light);
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .tech-border::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            border: 1px solid var(--accent-color);
+            pointer-events: none;
+        }
+
+        .scan-line {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: rgba(166, 124, 82, 0.3);
+            box-shadow: 0 0 10px rgba(166, 124, 82, 0.5);
+            animation: scan 8s linear infinite;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        @keyframes scan {
+            0% { top: 0; }
+            100% { top: calc(100% - 2px); }
+        }
+
+        .damage-effect {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(transparent 95%, rgba(166, 124, 82, 0.1) 95%),
+                linear-gradient(90deg, transparent 95%, rgba(166, 124, 82, 0.1) 95%);
+            background-size: 20px 20px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .status-bar {
+            height: 4px;
+            background: linear-gradient(to right, var(--accent-color), var(--secondary-color));
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            z-index: 2;
+        }
+
+        /* Override Tailwind utility classes */
+        .bg-white {
+            background-color: var(--bg-light) !important;
+        }
+        
+        .bg-gray-100 {
+            background-color: var(--bg-dark) !important;
+        }
+        
+        .bg-purple-900 {
+            background-color: var(--bg-dark) !important;
+            border-bottom: 1px solid var(--accent-color);
+        }
+        
+        .bg-purple-800 {
+            background-color: var(--bg-dark) !important;
+        }
+        
+        .text-purple-900 {
+            color: var(--text-color) !important;
+        }
+        
+        .text-purple-800 {
+            color: var(--text-color) !important;
+        }
+        
+        .border-purple-400 {
+            border-color: var(--accent-color) !important;
+        }
+        
+        .border-purple-300 {
+            border-color: var(--border-color) !important;
+        }
+        
+        .text-purple-700 {
+            color: var(--accent-color) !important;
+        }
+        
+        .text-purple-500 {
+            color: var(--accent-color) !important;
+        }
+        
+        .bg-purple-600 {
+            background: linear-gradient(to right, var(--secondary-color), var(--accent-color)) !important;
+        }
+        
+        .bg-purple-700 {
+            background: linear-gradient(to right, var(--secondary-color), var(--accent-color)) !important;
+        }
+        
+        .hover\:bg-purple-700:hover {
+            background: linear-gradient(to right, #4a2323, #8c6a48) !important;
+        }
+    </style>
+</head>
+<body class="font-sans">
+    <!-- Навигация -->
+    <nav class="text-white shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <a href="#" onclick="showPage('home')" class="text-2xl font-bold flex items-center">
+                <i class="fas fa-microchip mr-2 text-accent-color"></i> IT SOLUTIONS
+            </a>
+            <div class="hidden md:flex space-x-6">
+                <a href="#" onclick="showPage('home')" class="hover:text-accent-color transition">ГЛАВНАЯ</a>
+                <a href="#" onclick="showPage('services')" class="hover:text-accent-color transition">УСЛУГИ</a>
+            </div>
+            <button class="md:hidden focus:outline-none" id="mobile-menu-button">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </div>
+        <!-- Мобильное меню -->
+        <div class="md:hidden hidden" id="mobile-menu" style="background-color: var(--bg-light);">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="#" onclick="showPage('home')" class="block px-3 py-2 rounded" style="background-color: var(--bg-dark);">ГЛАВНАЯ</a>
+                <a href="#" onclick="showPage('services')" class="block px-3 py-2 rounded" style="background-color: var(--bg-dark);">УСЛУГИ</a>
+            </div>
+        </div>
+        <div class="status-bar"></div>
+    </nav>
+    <div class="damage-effect"></div>
+
+    <!-- Главная страница -->
+    <div id="home" class="page-transition active-page">
+        <!-- Герой секция -->
+        <section class="hedgehog-bg bg-opacity-90 relative">
+            <div class="scan-line"></div>
+            <div class="py-32">
+                <div class="container mx-auto px-4 text-center text-white animate-entry">
+                    <h1 class="text-5xl md:text-6xl font-bold mb-6">IT SOLUTIONS</h1>
+                    <p class="text-xl md:text-2xl mb-8">Надежные и масштабируемые решения для выживания вашего бизнеса</p>
+                    <div class="flex justify-center space-x-4">
+                        <a href="#" onclick="showPage('services')" class="button">НАШИ УСЛУГИ</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- О нас и наших услугах -->
+        <section class="py-16">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl font-bold text-center mb-12">О НАС И НАШИХ УСЛУГАХ</h2>
+                <div class="flex flex-col md:flex-row items-center animate-entry">
+                    <div class="md:w-1/2 mb-8 md:mb-0 md:pr-8">
+                        <div class="p-1 rounded-lg" style="border: 1px solid var(--accent-color); box-shadow: 0 0 20px -5px var(--accent-color);">
+                            <img src="https://images.unsplash.com/photo-1537498425277-c283d32ef9db?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Рабочее место программиста" class="rounded-lg shadow-xl w-full">
+                        </div>
+                    </div>
+                    <div class="md:w-1/2">
+                        <h3 class="text-2xl font-semibold mb-4">ЭКСПЕРТНАЯ РАЗРАБОТКА ПРОГРАММНОГО ОБЕСПЕЧЕНИЯ</h3>
+                        <p class="mb-4">Мы команда опытных разработчиков, специализирующихся на создании высококачественного и масштабируемого программного обеспечения. Мы помогаем бизнесам любого размера реализовать их цифровые идеи.</p>
+                        <p class="mb-4">Наш подход основан на глубоком понимании потребностей клиента, использовании передовых технологий и agile-методологий разработки. Мы стремимся к прозрачности и эффективной коммуникации на всех этапах проекта.</p>
+                        <p class="mb-6">Мы предлагаем полный спектр услуг, от консультаций и проектирования до разработки, тестирования и поддержки. Наша цель - предоставить вам решение, которое не только соответствует вашим текущим текущим требованиям, но и готово к будущим вызовам.</p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                            <div class="hedgehog-card p-4">
+                                <i class="fas fa-laptop-code text-3xl mb-4 block text-center mx-auto" style="color: var(--accent-color);"></i>
+                                <h4 class="font-bold text-lg mb-2 text-center">ВЕБ-РАЗРАБОТКА</h4>
+                                <p class="text-sm text-center">Современные сайты и приложения</p>
+                            </div>
+                            <div class="hedgehog-card p-4">
+                                <i class="fas fa-mobile-alt text-3xl mb-4 block text-center mx-auto" style="color: var(--accent-color);"></i>
+                                <h4 class="font-bold text-lg mb-2 text-center">МОБИЛЬНЫЕ ПРИЛОЖЕНИЯ</h4>
+                                <p class="text-sm text-center">iOS и Android разработка</p>
+                            </div>
+                            <div class="hedgehog-card p-4">
+                                <i class="fas fa-database text-3xl mb-4 block text-center mx-auto" style="color: var(--accent-color);"></i>
+                                <h4 class="font-bold text-lg mb-2 text-center">БАЗЫ ДАННЫХ И API</h4>
+                                <p class="text-sm text-center">Проектирование и реализация</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Цены -->
+        <section class="py-16">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl font-bold text-center mb-12">НАШИ ТАРИФЫ</h2>
+                <div class="grid md:grid-cols-3 gap-8 animate-entry">
+                    <div class="hedgehog-card p-8">
+                        <div class="text-center mb-6">
+                            <h3 class="text-2xl font-bold mb-2">БАЗОВЫЙ ПАКЕТ</h3>
+                            <p>Идеально подходит для небольших проектов или стартапов. Работы по этому пакету часто выполняются Junior-разработчиками.</p>
+                        </div>
+                        <div class="text-center mb-6">
+                            <span class="text-4xl font-bold">500₽</span>
+                            <span>Основные услуги разработки</span>
+                        </div>
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-center">
+                                <i class="fas fa-check mr-2" style="color: var(--accent-color);"></i>
+                                <span>Основные услуги разработки</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check mr-2" style="color: var(--accent-color);"></i>
+                                <span>Wi-Fi</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check mr-2" style="color: var(--accent-color);"></i>
+                                <span>Консультации</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check mr-2" style="color: var(--accent-color);"></i>
+                                <span>Поддержка (ограниченная)</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="hedgehog-card p-8 transform scale-105" style="border: 2px solid var(--accent-color);">
+                        <div class="text-center mb-6">
+                            <h3 class="text-2xl font-bold mb-2">СТАНДАРТНЫЙ ПАКЕТ</h3>
+                            <p>Оптимальное решение для среднего бизнеса с растущими потребностями. В рамках этого пакета работают Middle-разработчики.</p>
+                        </div>
+                        <div class="text-center mb-6">
+                            <span class="text-4xl font-bold">400₽</span>
+                            <span class="">/час</span>
+                        </div>
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-center">
+                                <i class="fas fa-check mr-2" style="color: var(--accent-color);"></i>
+                                <span>Все преимущества стандарта</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check mr-2" style="color: var(--accent-color);"></i>
+                                <span>Скидка 33%</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check mr-2" style="color: var(--accent-color);"></i>
+                                <span>Бесплатный час в месяц</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check mr-2" style="color: var(--accent-color);"></i>
+                                <span>Приоритетная бронь</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="hedgehog-card p-8">
+                        <div class="text-center mb-6">
+                            <h3 class="text-2xl font-bold mb-2">ПРЕМИУМ ПАКЕТ</h3>
+                            <p>Индивидуальное решение для крупных и сложных проектов. Над сложными задачами Премиум пакета трудятся Senior-разработчики.</p>
+                        </div>
+                        <div class="text-center mb-6">
+                            <span class="text-4xl font-bold">450₽</span>
+                            <span class="">/час с человека</span>
+                        </div>
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-center">
+                                <i class="fas fa-check mr-2" style="color: var(--accent-color);"></i>
+                                <span>Все преимущества стандарта</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check mr-2" style="color: var(--accent-color);"></i>
+                                <span>Отдельная зона</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check mr-2" style="color: var(--accent-color);"></i>
+                                <span>Фотосессия с ежами</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check mr-2" style="color: var(--accent-color);"></i>
+                                <span>Скидка на магазин 10%</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="text-center mt-8">
+                    <p class="">* Первые 15 минут - бесплатно для всех гостей</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- События -->
+        <section class="py-16">
+            <div class="container mx-auto px-4 animate-entry">
+                <h2 class="text-3xl font-bold text-center mb-12">НАШИ ПРОГРАММИСТЫ</h2>
+                <div class="text-lg text-center mb-8">
+                    <p class="mb-4">Наша команда состоит из высококвалифицированных и опытных разработчиков, специализирующихся на создании надежного и масштабируемого программного обеспечения.</p>
+                    <p class="mb-4">Мы постоянно совершенствуем свои навыки и следим за последними тенденциями в мире разработки, чтобы предоставлять нашим клиентам самые эффективные и современные решения.</p>
+                    <p>Мы работаем с различными технологиями и языками программирования, чтобы подобрать оптимальный стек для каждого проекта и достичь наилучших результатов.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Отзывы -->
+        <section class="py-16">
+            <div class="container mx-auto px-4 animate-entry">
+                <h2 class="text-3xl font-bold text-center mb-12">ОТЗЫВЫ НАШИХ ГОСТЕЙ</h2>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="hedgehog-card p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 rounded-full overflow-hidden mr-4" style="background-color: var(--bg-light);">
+                                <img src="https://pics.rbc.ru/v2_companies_s3/resized/960xH/media/company_press_release_image/ad15cb23-3016-4787-a64f-b90778d42281.jpg" alt="Аватар пользователя" class="w-full h-full object-cover">
+                            </div>
+                            <div>
+                                <h4 class="font-bold">ДМИТРИЙ</h4>
+                                <div class="flex" style="color: var(--accent-color);">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="">"Мы обратились за разработкой веб-приложения, и команда продемонстрировала высокий профессионализм и внимание к деталям. Результат превзошел наши ожидания!"</p>
+                    </div>
+                    <div class="hedgehog-card p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 rounded-full overflow-hidden mr-4" style="background-color: var(--bg-light);">
+                                <img src="https://bestspeakers.ru/wp-content/uploads/2024/01/Luchshie-spikery-Dotsenko-Dmitrij-Biznes-IT-800x600.jpg" alt="Аватар пользователя" class="w-full h-full object-cover">
+                            </div>
+                            <div>
+                                <h4 class="font-bold">ДМИТРИЙ</h4>
+                                <div class="flex" style="color: var(--accent-color);">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="">"Благодаря их экспертизе в Backend и API, мы смогли быстро и без проблем интегрировать наш сервис со сторонними платформами. Очень довольны сотрудничеством."</p>
+                    </div>
+                    <div class="hedgehog-card p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 rounded-full overflow-hidden mr-4" style="background-color: var(--bg-light);">
+                                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Аватар пользователя" class="w-full h-full object-cover">
+                            </div>
+                            <div>
+                                <h4 class="font-bold">ЕЛЕНА</h4>
+                                <div class="flex" style="color: var(--accent-color);">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="">"Необходима была срочная доработка существующего проекта, и программисты справились с задачей оперативно и качественно. Отличная работа!"</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Контакты (кратко) -->
+        <section class="py-16" style="background-color: var(--bg-light);">
+            <div class="container mx-auto px-4 animate-entry">
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div>
+                        <h3 class="text-xl font-bold mb-4 flex items-center">
+                            <i class="fas fa-map-marker-alt mr-2" style="color: var(--accent-color);"></i> АДРЕС
+                        </h3>
+                        <p>г. Москва, ул. Ленина, д.1</p>
+                        <p>Метро "Лесная"</p>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold mb-4 flex items-center">
+                            <i class="far fa-clock mr-2" style="color: var(--accent-color);"></i> ЧАСЫ РАБОТЫ
+                        </h3>
+                        <p>Пн-Пт: 10:00 - 22:00</p>
+                        <p>Сб-Вс: 11:00 - 23:00</p>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold mb-4 flex items-center">
+                            <i class="fas fa-phone-alt mr-2" style="color: var(--accent-color);"></i> КОНТАКТЫ
+                        </h3>
+                        <p>+7 (495) 123-45-67</p>
+                        <p>info@itsolutions.ru</p>
+                        <div class="flex space-x-4 mt-3">
+                            <a href="#" class="hover:text-accent-color"><i class="fab fa-vk fa-lg"></i></a>
+                            <a href="#" class="hover:text-accent-color"><i class="fab fa-telegram fa-lg"></i></a>
+                            <a href="#" class="hover:text-accent-color"><i class="fab fa-instagram fa-lg"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Услуги -->
+    <div id="services" class="page-transition inactive-page">
+        <section class="py-12">
+            <div class="container mx-auto px-4">
+                <h1 class="text-4xl font-bold text-center mb-12">НАШИ УСЛУГИ</h1>
+                
+                <div class="mb-12">
+                    <h2 class="text-2xl font-semibold mb-6 pb-2" style="border-bottom: 2px solid var(--accent-color);">ВЕБ-РАЗРАБОТКА</h2>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        
+                        <div class="hedgehog-card rounded-lg overflow-hidden menu-item">
+                            <img src="https://img.dasreda.ru/photo-data/32b6b5b9-5812-4a7e-9da4-b7148c969b01/shutterstock_2306262169.jpg?q=80" alt="E-commerce" class="w-full h-48 object-cover">
+                            <div class="p-4">
+                                <h3 class="font-bold text-lg mb-2">E-COMMERCE РЕШЕНИЯ</h3>
+                                <p class="mb-3">Разработка интернет-магазинов и торговых площадок.</p>
+                                <span class="font-bold">ПОДРОБНЕЕ</span>
+                            </div>
+                        </div>
+                        <div class="hedgehog-card rounded-lg overflow-hidden menu-item">
+                            <img src="https://www.it-courses.by/wp-content/uploads/2018/06/20-Most-Common-Work-from-Home-Job-Titles.jpg" alt="Веб-приложения" class="w-full h-48 object-cover">
+                            <div class="p-4">
+                                <h3 class="font-bold text-lg mb-2">СЛОЖНЫЕ ВЕБ-ПРИЛОЖЕНИЯ</h3>
+                                <p class="mb-3">Разработка SaaS, CRM, ERP систем и других веб-платформ.</p>
+                                <span class="font-bold">ПОДРОБНЕЕ</span>
+                            </div>
+                        </div>
+                        <div class="hedgehog-card rounded-lg overflow-hidden menu-item">
+                            <img src="https://cdn.iz.ru/sites/default/files/styles/1920x1080/public/article-2022-05/20210614_gaf_u39_903.jpeg.jpg?itok=arZ473cD" alt="Лендинги" class="w-full h-48 object-cover">
+                            <div class="p-4">
+                                <h3 class="font-bold text-lg mb-2">ПРОМО-СТРАНИЦЫ И ЛЕНДИНГИ</h3>
+                                <p class="mb-3">Быстрое создание эффективных одностраничных сайтов.</p>
+                                <span class="font-bold">ПОДРОБНЕЕ</span>
+                            </div>
+                        </div>
+                        <div class="hedgehog-card rounded-lg overflow-hidden menu-item">
+                            <img src="https://images.unsplash.com/photo-1520085601670-ee14aa5fa3e8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Поддержка сайтов" class="w-full h-48 object-cover">
+                            <div class="p-4">
+                                <h3 class="font-bold text-lg mb-2">ПОДДЕРЖКА И ДОРАБОТКА САЙТОВ</h3>
+                                <p class="mb-3">Обслуживание и развитие существующих веб-ресурсов.</p>
+                                <span class="font-bold">ПОДРОБНЕЕ</span>
+                            </div>
+                        </div>
+                        <div class="hedgehog-card rounded-lg overflow-hidden menu-item">
+                            <img src="https://gitinsky.com/img/tild3632-3262-4261-b733-643830626465__1.jpg" alt="Аудит сайтов" class="w-full h-48 object-cover">
+                            <div class="p-4">
+                                <h3 class="font-bold text-lg mb-2">ТЕХНИЧЕСКИЙ АУДИТ И ОПТИМИЗАЦИЯ</h3>
+                                <p class="mb-3">Анализ производительности, безопасности и SEO.</p>
+                                <span class="font-bold">ПОДРОБНЕЕ</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mb-12">
+                    <h2 class="text-2xl font-semibold mb-10 pb-2" style="border-bottom: 2px solid var(--accent-color);">BACKEND И API</h2>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="hedgehog-card rounded-lg overflow-hidden menu-item">
+                            <img src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Разработка API" class="w-full h-48 object-cover">
+                            <div class="p-4">
+                                <h3 class="font-bold text-lg mb-2">РАЗРАБОТКА RESTFUL API</h3>
+                                <p class="mb-3">Проектирование и создание безопасных и масштабируемых API.</p>
+                                <span class="font-bold">ПОДРОБНЕЕ</span>
+                            </div>
+                        </div>
+                        <div class="hedgehog-card rounded-lg overflow-hidden menu-item">
+                            <img src="https://img.gazeta.ru/files3/100/13816100/Depositphotos_226808220_l-2015-pic4_zoom-1500x1500-19803.jpg" alt="Базы данных" class="w-full h-48 object-cover">
+                            <div class="p-4">
+                                <h3 class="font-bold text-lg mb-2">ПРОЕКТИРОВАНИЕ И ОПТИМИЗАЦИЯ БД</h3>
+                                <p class="mb-3">Разработка и улучшение структуры баз данных.</p>
+                                <span class="font-bold">ПОДРОБНЕЕ</span>
+                            </div>
+                        </div>
+                        <div class="hedgehog-card rounded-lg overflow-hidden menu-item">
+                            <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Интеграции" class="w-full h-48 object-cover">
+                            <div class="p-4">
+                                <h3 class="font-bold text-lg mb-2">ИНТЕГРАЦИЯ СТОРОННИХ СЕРВИСОВ</h3>
+                                <p class="mb-3">Настройка взаимодействия вашего ПО с внешними API.</p>
+                                <span class="font-bold">ПОДРОБНЕЕ</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <h2 class="text-2xl font-semibold mb-6 pb-2" style="border-bottom: 2px solid var(--accent-color);">ЯЗЫКИ ПРОГРАММИРОВАНИЯ</h2>
+                    <div class="mt-6">
+                        <p class="mb-4">Наши разработчики владеют широким спектром современных языков программирования, включая:</p>
+                        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                            <div class="hedgehog-card p-4 text-center">
+                                <h4 class="font-bold text-lg">JavaScript</h4>
+                                <p class="text-sm">(React, Vue, Angular)</p>
+                            </div>
+                            <div class="hedgehog-card p-4 text-center">
+                                <h4 class="font-bold text-lg">Python</h4>
+                                <p class="text-sm">(Django, Flask)</p>
+                            </div>
+                            <div class="hedgehog-card p-4 text-center">
+                                <h4 class="font-bold text-lg">Java</h4>
+                                <p class="text-sm">(Spring)</p>
+                            </div>
+                            <div class="hedgehog-card p-4 text-center">
+                                <h4 class="font-bold text-lg">C#</h4>
+                                <p class="text-sm">(.NET)</p>
+                            </div>
+                            <div class="hedgehog-card p-4 text-center">
+                                <h4 class="font-bold text-lg">PHP</h4>
+                                <p class="text-sm">(Laravel)</p>
+                            </div>
+                            <div class="hedgehog-card p-4 text-center">
+                                <h4 class="font-bold text-lg">Ruby</h4>
+                                <p class="text-sm">(Rails)</p>
+                            </div>
+                            <div class="hedgehog-card p-4 text-center">
+                                <h4 class="font-bold text-lg">Swift</h4>
+                                <p class="text-sm">(iOS)</p>
+                            </div>
+                            <div class="hedgehog-card p-4 text-center">
+                                <h4 class="font-bold text-lg">Kotlin</h4>
+                                <p class="text-sm">(Android)</p>
+                            </div>
+                        </div>
+                        <p class="mt-4">Мы подбираем оптимальный набор технологий для каждого проекта.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Цены -->
+    <div id="pricing" class="page-transition inactive-page">
+        <section class="py-12">
+            <div class="container mx-auto px-4">
+                <h1 class="text-4xl font-bold text-center mb-12">НАШИ ТАРИФЫ НА УСЛУГИ</h1>
+                
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="hedgehog-card rounded-lg overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1507238691751-d80816c6f477?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Базовый пакет" class="w-full h-64 object-cover">
+                        <div class="p-6">
+                            <h3 class="font-bold text-xl mb-2">БАЗОВЫЙ ПАКЕТ</h3>
+                            <p class="mb-4">Идеально подходит для небольших проектов или стартапов. Работы по этому пакету часто выполняются Junior-разработчиками.</p>
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold">ОТ 50 000₽</span>
+                                <button class="button">ЗАКАЗАТЬ</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="hedgehog-card rounded-lg overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1550439091-cd556d812247?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Стандартный пакет" class="w-full h-64 object-cover">
+                        <div class="p-6">
+                            <h3 class="font-bold text-xl mb-2">СТАНДАРТНЫЙ ПАКЕТ</h3>
+                            <p class="mb-4">Оптимальное решение для среднего бизнеса с растущими потребностями. В рамках этого пакета работают Middle-разработчики.</p>
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold">ОТ 150 000₽</span>
+                                <button class="button">ЗАКАЗАТЬ</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="hedgehog-card rounded-lg overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Премиум пакет" class="w-full h-64 object-cover">
+                        <div class="p-6">
+                            <h3 class="font-bold text-xl mb-2">ПРЕМИУМ ПАКЕТ</h3>
+                            <p class="mb-4">Индивидуальное решение для крупных и сложных проектов. Над сложными задачами Премиум пакета трудятся Senior-разработчики.</p>
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold">ПО ЗАПРОСУ</span>
+                                <button class="button">ЗАКАЗАТЬ</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="hedgehog-card rounded-lg overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1534665482403-cdcd6d2fd95c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Консультации" class="w-full h-64 object-cover">
+                        <div class="p-6">
+                            <h3 class="font-bold text-xl mb-2">КОНСУЛЬТАЦИИ</h3>
+                            <p class="mb-4">Экспертное мнение и помощь в выборе технологий.</p>
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold">2000₽/час</span>
+                                <button class="button">ЗАКАЗАТЬ</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="hedgehog-card rounded-lg overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1590649751824-9176cf0f8f4d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Code Review" class="w-full h-64 object-cover">
+                        <div class="p-6">
+                            <h3 class="font-bold text-xl mb-2">CODE REVIEW</h3>
+                            <p class="mb-4">Повышение качества кода и выявление потенциальных проблем.</p>
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold">ОТ 1500₽/час</span>
+                                <button class="button">ЗАКАЗАТЬ</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="hedgehog-card rounded-lg overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1521737711867-ee1aa29fc9a9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Техническое Задание" class="w-full h-64 object-cover">
+                        <div class="p-6">
+                            <h3 class="font-bold text-xl mb-2">РАЗРАБОТКА ТЗ</h3>
+                            <p class="mb-4">Четкое описание требований для успешной реализации проекта.</p>
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold">ОТ 30 000₽</span>
+                                <button class="button">ЗАКАЗАТЬ</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="hedgehog-card rounded-lg overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Поддержка и Сопровождение" class="w-full h-64 object-cover">
+                        <div class="p-6">
+                            <h3 class="font-bold text-xl mb-2">ПОДДЕРЖКА И СОПРОВОЖДЕНИЕ</h3>
+                            <p class="mb-4">Гарантия стабильной работы вашего программного продукта.</p>
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold">ОТ 10 000₽/мес</span>
+                                <button class="button">ЗАКАЗАТЬ</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="hedgehog-card rounded-lg overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1507238691751-d80816c6f477?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Индивидуальная Разработка" class="w-full h-64 object-cover">
+                        <div class="p-6">
+                            <h3 class="font-bold text-xl mb-2">ИНДИВИДУАЛЬНАЯ РАЗРАБОТКА</h3>
+                            <p class="mb-4">Решение, полностью адаптированное под ваши уникальные задачи.</p>
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold">ПО ЗАПРОСУ</span>
+                                <button class="button">ЗАКАЗАТЬ</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="hedgehog-card rounded-lg overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1550439091-cd556d812247?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Технический Аудит" class="w-full h-64 object-cover">
+                        <div class="p-6">
+                            <h3 class="font-bold text-xl mb-2">ТЕХНИЧЕСКИЙ АУДИТ</h3>
+                            <p class="mb-4">Комплексный анализ существующего ПО для выявления слабых мест.</p>
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold">ОТ 50 000₽</span>
+                                <button class="button">ЗАКАЗАТЬ</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+</div>
+
+<script>
+    function showPage(pageId) {
+        document.querySelectorAll('.page-transition').forEach(page => {
+            page.classList.remove('active-page');
+            page.classList.add('inactive-page');
+        });
+        
+        const selectedPage = document.getElementById(pageId);
+        if (selectedPage) {
+            selectedPage.classList.remove('inactive-page');
+            selectedPage.classList.add('active-page');
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', function() {
+            mobileMenu.classList.toggle('hidden');
+        });
+    });
+
+    document.querySelectorAll('button').forEach(button => {
+        button.addEventListener('click', function(e) {
+            if (button.textContent.trim() === 'Записаться') {
+                e.preventDefault();
+                alert('Спасибо за интерес! Оставьте ваши контакты, и мы свяжемся с вами для обсуждения проекта.');
+            }
+        });
+    });
+
+    function openGalleryModal(imageSrc) {
+        const modal = document.createElement('div');
+        modal.className = 'gallery-modal';
+        modal.innerHTML = `
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <img src="${imageSrc}" alt="Увеличенное изображение">
+                <div class="modal-controls">
+                    <button class="prev-image">&lt;</button>
+                    <button class="next-image">&gt;</button>
+                </div>
+            </div>
+        `;
+        
+        document.body.appendChild(modal);
+        document.body.style.overflow = 'hidden';
+        
+        modal.querySelector('.close-modal').onclick = () => {
+            modal.remove();
+            document.body.style.overflow = '';
+        };
+        
+        setupGalleryNavigation(modal, imageSrc);
+    }
+
+    function setupGalleryNavigation(modal, currentSrc) {
+        const images = Array.from(document.querySelectorAll('.hedgehog-card img'));
+        const currentIndex = images.findIndex(img => img.src === currentSrc);
+        
+        const prevBtn = modal.querySelector('.prev-image');
+        const nextBtn = modal.querySelector('img');
+        const modalImg = modal.querySelector('img');
+        
+        prevBtn.onclick = () => {
+            const newIndex = (currentIndex - 1 + images.length) % images.length;
+            modalImg.src = images[newIndex].src;
+        };
+        
+        nextBtn.onclick = () => {
+            const newIndex = (currentIndex + 1) % images.length;
+            modalImg.src = images[newIndex].src;
+        };
+    }
+
+    function animateMenuItems() {
+        const menuItems = document.querySelectorAll('.services-item');
+        menuItems.forEach((item, index) => {
+            item.style.animationDelay = `${index * 0.1}s`;
+        });
+    }
+
+    function showNotification(message, type = 'success') {
+        const notification = document.createElement('div');
+        notification.className = `notification ${type}`;
+        notification.textContent = message;
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+            notification.classList.add('fade-out');
+            setTimeout(() => notification.remove(), 300);
+        }, 3000);
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.hedgehog-card img').forEach(img => {
+            img.addEventListener('click', function() {
+                openGalleryModal(this.src);
+            });
+        });
+
+        animateMenuItems();
+
+        const contactForm = document.querySelector('form');
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const formData = new FormData(this);
+                setTimeout(() => {
+                    showNotification('Спасибо за ваше сообщение! Мы ответим вам в ближайшее время.');
+                    this.reset();
+                }, 1000);
+            });
+        }
+    });
+
+    const styles = `
+        .gallery-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        .modal-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+        }
+        
+        .modal-content img {
+            max-width: 100%;
+            max-height: 80vh;
+            object-fit: contain;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+        }
+        
+        .modal-controls {
+            position: absolute;
+            bottom: -40px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        
+        .modal-controls button {
+            background: rgba(30, 30, 30, 0.9);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+            padding: 5px 15px;
+            border-radius: 2px;
+            cursor: pointer;
+        }
+        
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            border-radius: 4px;
+            background: linear-gradient(135deg, var(--secondary-color), var(--accent-color));
+            color: var(--text-color);
+            z-index: 1000;
+            animation: slideIn 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+        
+        .notification.error {
+            background: linear-gradient(135deg, #5c1d1d, #7f1d1d);
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        @keyframes slideOut {
+            from {
+                transform: translateX(0);
+            }
+            to {
+                transform: translateX(100%);
+            }
+        }
+    `;
+
+    const styleSheet = document.createElement('style');
+    styleSheet.textContent = styles;
+    document.head.appendChild(styleSheet);
+
+    // Splash screen animation
+    const splashScreen = document.createElement('div');
+    splashScreen.id = 'splash-screen';
+    splashScreen.innerHTML = `
+        <div style="text-align: center;">
+            <h1 style="font-family: 'Orbitron', sans-serif; font-size: 2.5rem; margin-bottom: 2rem; text-shadow: 0 0 10px rgba(166, 124, 82, 0.5);">IT SOLUTIONS</h1>
+            <p style="font-size: 1.2rem; margin-bottom: 2rem;">Will solve problems for you</p>
+            <div style="width: 100px; height: 4px; background: linear-gradient(to right, var(--accent-color), var(--secondary-color)); margin: 0 auto;"></div>
+        </div>
+    `;
+    document.body.appendChild(splashScreen);
+
+    setTimeout(() => {
+        splashScreen.style.opacity = '0';
+        splashScreen.style.transition = 'opacity 1.5s ease-out';
+        splashScreen.addEventListener('transitionend', () => splashScreen.remove());
+    }, 1500);
+</script>
+</body>
+</html>
