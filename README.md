@@ -1,3 +1,7 @@
+![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
+
 # Веб-сайт IT-решений
 
 Этот проект представляет собой адаптивный одностраничный веб-сайт для вымышленной компании, предоставляющей IT-решения. Он отличается современным дизайном в темных тонах с акцентом на демонстрацию услуг, цен и информации о компании.
